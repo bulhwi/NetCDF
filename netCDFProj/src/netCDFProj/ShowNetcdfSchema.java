@@ -13,7 +13,7 @@ import ucar.netcdf.NetcdfFile;
  */
 public class ShowNetcdfSchema {
 	/*static String fileName = "C:\\Users\\bulhwi\\Desktop\\sresa1b_ncar_ccsm3-example.nc";*/
-	static String fileName = "C:\\Users\\bulhwi\\Desktop\\example.nc"; 
+	static String fileName = "C:\\Users\\bulhwi\\Desktop\\CreateNetCDf.nc"; 
 	public static void main(String[] args){
 		try {
 			Netcdf nc = new NetcdfFile(fileName, true);

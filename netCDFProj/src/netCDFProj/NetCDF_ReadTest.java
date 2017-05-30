@@ -1,90 +1,75 @@
 package netCDFProj;
 
+import java.io.IOException;
+
+import ucar.multiarray.MultiArray;
 import ucar.netcdf.Attribute;
-import ucar.netcdf.Dimension;
-import ucar.netcdf.ProtoVariable;
-import ucar.netcdf.Schema;
-import ucar.netcdf.UnlimitedDimension;
-
-
-/*
-netcdf example1 {
-dimensions:
-	lat = 2 ;
-	lon = 3 ;
-	time = UNLIMITED ;
-variables:
-	int rh(time, lat, lon) ;
-            T:long_name="relative humidity" ;
-		T:units = "percent" ;
-	double T(time, lat, lon) ;
-            T:long_name="surface temperature" ;
-		T:units = "degC" ;
-	float lat(lat) ;
-		lat:units = "degrees_north" ;
-	float lon(lon) ;
-		lon:units = "degrees_east" ;
-	int time(time) ;
-		time:units = "hours" ;
-// global attributes:
-		:title = "Example Data" ;
-data:
-}
-*/
-
+import ucar.netcdf.Netcdf;
+import ucar.netcdf.NetcdfFile;
+import ucar.netcdf.Variable;
 
 public class NetCDF_ReadTest {
 	static String fileName = "C:\\Users\\bulhwi\\Desktop\\CreateNetCDF.nc";
-	public static void main(String[] args) {
-		Dimension timeD = new UnlimitedDimension("time");
-		Dimension latD = new Dimension("lat", 2);
-		Dimension lonD = new Dimension("lon", 3);
-		
-		
-		//변수 생성1
-		String rhPName = "rh";
-		Class rhPType = int.class;
-		Dimension[] rhPDims = {timeD, latD, lonD}; 
-		Attribute rhPLongName = new Attribute("long_name", "relative humidity");
-		Attribute rhPUnits = new Attribute("units","percent");
-		Attribute[] rhPAtts = {rhPLongName, rhPUnits};
-		ProtoVariable rhP = new ProtoVariable(
-					rhPName, 
-					rhPType, 
-					rhPDims, 
-					rhPAtts
-				);
-		
-		
-		//변수생성의 방법2
-		ProtoVariable tP = new ProtoVariable(
-					"T",
-					double.class,
-					new Dimension[]{timeD, latD, lonD},
-					new Attribute[]{
-						new Attribute("long_name", "surface temperature"),
-						new Attribute("units", "degC"),
-					}
-				
-				);
-		
-		//변수생성 방법3 - 보통 1차원배열로 구성된 경도,위도에 대한 변수를 생성할때 사용한다.
-		ProtoVariable latP = new ProtoVariable(latD.getName(), float.class, latD );
-		latP.putAttribute(new Attribute("units", "degrees_north"));
-		ProtoVariable lonP = new ProtoVariable(lonD.getName(), float.class, lonD);
-		lonP.putAttribute(new Attribute("units", "degrees_east"));
-		ProtoVariable timeP = new ProtoVariable(timeD.getName(), float.class, timeD);
-		timeP.putAttribute(new Attribute("units", "hours"));
-		
-		
-		//전역속성
-		Attribute titleA = new Attribute("title", "Example Data");
 
-		Schema schema = new Schema(
-			    new ProtoVariable[] {rhP, tP, latP, lonP, timeP},
-			    new Attribute[] {titleA}
-			    );
-		
-		
+	public static void main(String[] args) {
+		try {
+			Netcdf nc = new NetcdfFile(fileName, true);
+			Attribute titleA = nc.getAttribute("title");
+			String title = titleA.getStringValue();
+			System.out.println("title = " + title);
+
+			Variable lat = nc.get("lat");
+			int nlats = lat.getLengths()[0];
+			System.out.println(nlats);
+			double[] lats = new double[nlats];
+			int[] index = new int[1];
+			for (int i = 0; i < nlats; i++) {
+				index[0] = i;
+				lats[i] = lat.getDouble(index);
+				System.out.println("lats[" + i + "]: " + lats[i]);
+			}
+
+			// 유닛속성을 읽어옴
+			String latUnits = lat.getAttribute("units").getStringValue();
+			System.out.println(latUnits);
+
+			// 속성을 읽어올때 MultiArray를 이용 ex lon /// getRank 배열의 차원수를 리턴
+			Variable lon = nc.get("lon");
+			int[] origin = new int[lon.getRank()]; // 시작지점
+			int[] extent = lon.getLengths(); // 길이
+			MultiArray lonMa = lon.copyout(origin, extent);
+
+			// read time
+			Variable time = nc.get("time");
+			origin = new int[time.getRank()];
+			extent = time.getLengths();
+			MultiArray timeMa = time.copyout(origin, extent);
+
+			// read data
+			Variable rh = nc.get("rh");
+			int[] rhShape = rh.getLengths();
+			System.out.println(rhShape[0] + ", " + rhShape[1] + ", "
+					+ rhShape[2]);
+			int[][][] rhData = new int[rhShape[0]][rhShape[1]][rhShape[2]];
+
+			int[] ix = new int[3];
+			for (int itime = 0; itime < rhData.length; itime++) {
+				ix[0] = itime;
+				for (int ilat = 0; ilat < rhData[itime].length; ilat++) {
+					ix[1] = ilat;
+					for (int ilon = 0; ilon < rhData[itime][ilat].length; ilon++) {
+						ix[2] = ilon;
+						rhData[itime][ilat][ilon] = rh.getInt(new int[] {
+								itime, ilat, ilon });
+						System.out.println(rhData[itime][ilat][ilon] + "=="
+								+ itime + ", " + ilat + ", " + ilon);
+					}
+				}
+			}
+			System.out.println(rhData[1][0][2]);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
