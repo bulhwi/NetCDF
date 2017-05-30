@@ -58,7 +58,7 @@ import ucar.netcdf.Variable;
  * </pre>
  */
 public class NetCDF_read {
-	static String fileName = "C:\\Users\\bulhwi\\Desktop\\sresa1b_ncar_ccsm3-example.nc";
+	static String fileName = "C:\\Users\\bulhwi\\Desktop\\example.nc";
 	public static void main(String[] args) {
 		
 		try {

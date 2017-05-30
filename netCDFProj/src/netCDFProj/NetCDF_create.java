@@ -60,12 +60,12 @@ import ucar.netcdf.Variable;
  */
 public class NetCDF_create {
 	/*static String fileName = "C:\\Users\\bulhwi\\Desktop\\sresa1b_ncar_ccsm3-example.nc";*/
-	 static String fileName = "C:\\Users\\bulhwi\\Desktop\\example.nc"; // 만들려는 nc파일의 이름과 경로
+	 static String fileName = "C:\\Users\\bulhwi\\Desktop\\example.nc.nc"; // 만들려는 nc파일의 이름과 경로
 	 
 	public static void main(String[] args) {
-		Dimension timeD = new UnlimitedDimension("time");
-		Dimension latD = new Dimension("lat", 3);
-		Dimension lonD = new Dimension("lon", 4);
+		Dimension timeD = new UnlimitedDimension("time"); //UNLIMITED
+		Dimension latD = new Dimension("lat", 3); //위도 1차원배열
+		Dimension lonD = new Dimension("lon", 4); // 경도 1차원배열
 		
 		String rhPName = "rh";
 		Class rhPType = int.class;
