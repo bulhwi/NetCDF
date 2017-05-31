@@ -58,7 +58,7 @@ import ucar.netcdf.Variable;
  * </pre>
  */
 public class NetCDF_read {
-	static String fileName = "C:\\Users\\bulhwi\\Desktop\\example.nc";
+	static String fileName = "C:\\Users\\bulhwi\\Desktop\\sresa1b_ncar_ccsm3-example.nc";
 	public static void main(String[] args) {
 		
 		try {
@@ -108,9 +108,9 @@ public class NetCDF_read {
 			
 			Variable rh = nc.get("area");
 			int[] rhShape = rh.getLengths();
-			System.out.println(rhShape[2]);
+			System.out.println(rhShape[1]);
 			
-			int[][][] rhData = new int[rhShape[0]][rhShape[1]][rhShape[2]];
+			int[][][] rhData = new int[rhShape[0]][rhShape[1]][rhShape[1]];
 			rhData[1][0][1] = rh.getInt(new int[]{1,0,1});
 			
 			System.out.println("rh[1][0][1]  :  " + rhData[1][0][1]);
@@ -129,7 +129,7 @@ public class NetCDF_read {
 			    //전체 rh 데이타 출력
 			for(int i = 0; i<rhShape[0]; i++){
 				for(int j = 0; j<rhShape[1]; j++){
-					for(int k = 0; k<rhShape[2]; k++){
+					for(int k = 0; k<rhShape[1]; k++){
 						System.out.println("<" + i+","+j+"," +k +">" + rhData[i][j][k]);
 						
 					}
@@ -166,10 +166,7 @@ public class NetCDF_read {
 			    double t123 = t1d[(1 * tLengths[1] + 2) * tLengths[2] + 3];
 			    System.out.println("T[1][2][3]: " + t123);
 
-			    /* Use the public storage member of an ArrayMultiArray to
-		               get at the array storage and then access the [0][1][2]
-		               element by computing where it would be in a 1-dimensional
-		               array. */
+			
 			    MultiArrayImpl tAma = (MultiArrayImpl) tMa;
 			    double[] tD = (double[]) tAma.storage;
 			    double t012 = tD[(0 * tLengths[1] + 1) * tLengths[2] + 2];

@@ -38,6 +38,9 @@ public class NetCDF_ReadTest {
 			int[] origin = new int[lon.getRank()]; // 시작지점
 			int[] extent = lon.getLengths(); // 길이
 			MultiArray lonMa = lon.copyout(origin, extent);
+			
+			
+			
 
 			// read time
 			Variable time = nc.get("time");
