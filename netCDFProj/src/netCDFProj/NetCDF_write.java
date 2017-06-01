@@ -121,7 +121,7 @@ public class NetCDF_write {
 			 T2d.copyin(new int[2], // just 0's
 				       new ArrayMultiArray(T2dSlice));
 			
-			 System.out.println("wrote " + fileName + " successfully");
+			 System.out.println("write " + fileName + " successfully");
 			
 			
 			
