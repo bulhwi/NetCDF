@@ -85,11 +85,12 @@ public class test {
 						tatas[i][j][k] = tas.getDouble(searchIndex);
 						System.out.println(tatas[i][j][k] + "<" +times[i] +", "+lats[j] +", "+ lons[k]);
 						/*System.out.println("<"+times[i] +", "+lats[i]+", "+lons[j]+">"+(float) tasMa.getDouble(new int[]{i,j,k}));*/
+						
 					}
 				}
 			}
 			
-			
+			System.out.println("source tree testing......");
 			System.out.println(tatas[timeIndex3][latIndex][lonIndex2] + "asdasdas");
 			
 			System.out.println(tatas.length);
@@ -98,26 +99,11 @@ public class test {
 			
 			// // 검색된 값을 수정
 			
-			
-			
-			
-			
-			
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	public int getIndex(Netcdf nc, String var, double searchVar)
 			throws IOException {
