@@ -58,7 +58,8 @@ import ucar.netcdf.Variable;
  * </pre>
  */
 public class NetCDF_read {
-	static String fileName = "C:\\Users\\bulhwi\\Desktop\\sresa1b_ncar_ccsm3-example.nc";
+	static String fileName = "C:\\Users\\bulhwi\\Desktop\\sresa1b_ncar_ccsm3-example.nc";   // 경로/파일명
+	
 	public static void main(String[] args) {
 		
 		try {
@@ -71,10 +72,10 @@ public class NetCDF_read {
 			String title = titleA.getStringValue();
 			System.out.println(title);
 			
-			Variable lat = nc.get("lat");
-			
-			int nlats = lat.getLengths()[0];
-			double[] lats = new double[nlats];
+			Variable lat = nc.get("lat"); // 정의되있는 변수 명으로 변수정보를 가져온다 .
+			 
+			int nlats = lat.getLengths()[0]; //변수의 할당되 있는 배열의 길이
+			double[] lats = new double[nlats]; 
 			int[] index = new int[1];
 			System.out.println(nlats);
 			System.out.println(lat);
@@ -138,7 +139,7 @@ public class NetCDF_read {
 			
 	//////////////////////////////////////////////////////
 			MultiArray rhMa = new ArrayMultiArray(rhData);
-			for(IndexIterator rhIx = new IndexIterator(rhShape); rhIx.notDone(); rhIx.incr()){
+			for(IndexIterator rhIx = new IndexIterator(	rhShape);  rhIx.notDone();  rhIx.incr()){
 				rhMa.setInt(rhIx.value(), rh.getInt(rhIx.value()));
 			}
 			System.out.println("rh[1][1][1]: " + rhData[1][1][1]);

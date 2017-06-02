@@ -69,6 +69,10 @@ public class NetCDF_ReadTest {
 					}
 				}
 			}
+			
+		
+			
+			
 			System.out.println(rhData[1][0][2]);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

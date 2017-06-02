@@ -16,8 +16,14 @@ import ucar.netcdf.VariableIterator;
 	lon = 125.1562, 126.5625, 127.9688, 129.375, 130.7812
 	tas(time, lat, lon)
 	
+	example file = sresa1b_ncar_ccsm3-example.nc
+	
 	*/
-
+/**
+ * 정해진 영역의 데이터를 이용해서 대기온도 값을 조회하여 해당 데이터를 수정하는 테스트클래스
+ * @author bulhwi
+ *
+ */
 public class WriteTestClass {
 	static String fileName = "C:\\Users\\bulhwi\\Desktop\\sresa1b_ncar_ccsm3-example.nc";
 
@@ -25,10 +31,10 @@ public class WriteTestClass {
 
 		WriteTestClass t = new WriteTestClass();
 		Netcdf nc = t.ncLoad(fileName);
-
+		
 		try {
-			/* t.printNetCDFData(nc); */
-
+/////		
+			t.printNetCDFData(nc);
 			int latIndex = t.getIndex(nc, "lat", 34.31877136230469);
 			int latIndex2 = t.getIndex(nc, "lat", 35.71953201293945 );
 			int latIndex3 = t.getIndex(nc, "lat", 37.12029266357422);
@@ -38,9 +44,7 @@ public class WriteTestClass {
 			int lonIndex3 = t.getIndex(nc, "lon", 127.9688); //91
 			int lonIndex4 = t.getIndex(nc, "lon", 129.375); //92
 			int lonIndex5 = t.getIndex(nc, "lon", 130.7812); //93
-			
-			int timeIndex = t.getIndex(nc, "time", 730135.5);
-
+/////
 			Variable lat = nc.get("lat");
 			Variable lon = nc.get("lon");
 			Variable time = nc.get("time");
@@ -82,16 +86,15 @@ public class WriteTestClass {
 			}
 			
 			
-			System.out.println("*************");
+			System.out.println("****lats*********");
 			for(int i = 0; i<lats.length; i++){
 				System.out.println(lats[i]);
 			}
-			System.out.println("*************");
+			System.out.println("****lons*********");
 			for(int i = 0; i<lons.length; i++){
 				System.out.println(lons[i]);
 			}
-			System.out.println("*************");
-			
+			System.out.println("****times*********");
 			for(int i = 0; i< times.length; i++){
 				System.out.println(times[i]);
 			}
@@ -144,12 +147,6 @@ public class WriteTestClass {
 			}
 			
 			tas.copyin(writeArr, new ArrayMultiArray(data));
-			
-			
-			
-			
-			
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -158,7 +155,14 @@ public class WriteTestClass {
 	
 	
 	
-	
+	/**
+	 * nc파일에 선언된 배열구조의 변수에서  특정값을 검색하여 그 값의 인덱스번호를 리턴
+	 * @param nc - 로딩되어져 온 nc File 객체
+	 * @param var - 검색하려는 값의 변수 명
+	 * @param searchVar - 검색하려는 값
+	 * @return
+	 * @throws IOException
+	 */
 	public int getIndex(Netcdf nc, String var, double searchVar)
 			throws IOException {
 		Variable cdfVar = nc.get(var);
@@ -191,6 +195,16 @@ public class WriteTestClass {
 		return returnIndex;
 	}
 
+	
+	
+	
+	
+	/**
+	 * 특정 ncFile을 가져오기 위한 메서드
+	 * @param fileName
+	 * @return
+	 */
+	
 	public Netcdf ncLoad(String fileName) {
 		Netcdf nc = null;
 		try {
@@ -206,6 +220,17 @@ public class WriteTestClass {
 		return nc;
 	}
 	
+	
+	
+	
+	
+	
+	
+	/**
+	 * ncFile에 구조를 출력하기 위한 메서드
+	 * @param nc
+	 * @throws IOException
+	 */
 	public void printNetCDFData(Netcdf nc) throws IOException {
 
 		VariableIterator vi = nc.iterator();
@@ -229,3 +254,4 @@ public class WriteTestClass {
 	
 
 }
+

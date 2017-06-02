@@ -60,7 +60,7 @@ import ucar.netcdf.Variable;
  */
 public class NetCDF_create {
 	/*static String fileName = "C:\\Users\\bulhwi\\Desktop\\sresa1b_ncar_ccsm3-example.nc";*/
-	 static String fileName = "C:\\Users\\bulhwi\\Desktop\\example.nc.nc"; // 만들려는 nc파일의 이름과 경로
+	 static String fileName = "C:\\Users\\bulhwi\\Desktop\\example_2017_06_2.nc"; // 만들려는 nc파일의 이름과 경로
 	 
 	public static void main(String[] args) {
 		Dimension timeD = new UnlimitedDimension("time"); //UNLIMITED
@@ -75,6 +75,8 @@ public class NetCDF_create {
 		Attribute[] rhPAtts = {rhPLongName, rhPUnits};
 		ProtoVariable rhP = new ProtoVariable(rhPName, rhPType, rhPDims, rhPAtts);
 		
+		
+		//변수 T의 변수명과 타입, 풀네임,단위 세팅
 		ProtoVariable tP = new ProtoVariable(
 			    "T",
 			    double.class,
