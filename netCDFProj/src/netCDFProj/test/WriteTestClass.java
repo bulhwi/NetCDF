@@ -3,6 +3,8 @@ package netCDFProj.test;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import ucar.multiarray.ArrayMultiArray;
+import ucar.netcdf.Dimension;
 import ucar.netcdf.Netcdf;
 import ucar.netcdf.NetcdfFile;
 import ucar.netcdf.Variable;
@@ -17,7 +19,7 @@ import ucar.netcdf.VariableIterator;
 	*/
 
 public class WriteTestClass {
-	static String fileName = "C:\\Users\\bul92\\Desktop\\sresa1b_ncar_ccsm3-example.nc";
+	static String fileName = "C:\\Users\\bulhwi\\Desktop\\sresa1b_ncar_ccsm3-example.nc";
 
 	public static void main(String[] args) {
 
@@ -38,13 +40,7 @@ public class WriteTestClass {
 			int lonIndex5 = t.getIndex(nc, "lon", 130.7812); //93
 			
 			int timeIndex = t.getIndex(nc, "time", 730135.5);
-			
-			System.out.println(lonIndex);
-			System.out.println(lonIndex2);
-			System.out.println(lonIndex3);
-			System.out.println(lonIndex4);
-			System.out.println(lonIndex5);
-			
+
 			Variable lat = nc.get("lat");
 			Variable lon = nc.get("lon");
 			Variable time = nc.get("time");
@@ -102,7 +98,6 @@ public class WriteTestClass {
 			System.out.println("*************");
 			
 			int[] searchIndex = new int[3];
-			
 			Variable tas = nc.get("tas");
 			int[] tasDex = new int[tas.getRank()];
 			double[][][] tatas = new double[times.length][lats.length][lons.length];
@@ -115,9 +110,45 @@ public class WriteTestClass {
 						tatas[i][j][k] = tas.getDouble(searchIndex);
 						System.out.println(tatas[i][j][k]);
 					}
-					
 				}
 			}
+			
+			
+			///////////////////////////////////
+			
+			
+			
+			float[][][] data = new float[1][3][5];
+			System.out.println(data[0][2].length);
+			
+			for(int i=0; i<data.length; i++){
+				for(int j = 0; j<data[i].length; j++){
+					for(int k= 0; k<data[i][j].length; k++){
+							data[i][j][k] = 17.2017f;
+					}
+				}
+			}
+
+			
+			
+			Dimension timeD = nc.getDimensions().get("time");
+			int timeDex = timeD.getLength();
+			int[] writeArr = new int[3];
+			writeArr[0] = timeDex -1 ;
+			for(int i=0; i<lats.length; i++){
+				writeArr[1] = lats[i];
+				for(int j=0; j<lons.length; j++){
+					writeArr[2] = lons[j];
+					tas.set(writeArr, data[writeArr[0]][i][j]);
+				}
+			}
+			
+			tas.copyin(writeArr, new ArrayMultiArray(data));
+			
+			
+			
+			
+			
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -157,17 +188,14 @@ public class WriteTestClass {
 			}
 		}
 		
-		
 		return returnIndex;
 	}
 
 	public Netcdf ncLoad(String fileName) {
 		Netcdf nc = null;
 		try {
-
 			nc = new NetcdfFile(fileName, false);
 			System.out.println(nc);
-
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -175,10 +203,9 @@ public class WriteTestClass {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return nc;
 	}
-
+	
 	public void printNetCDFData(Netcdf nc) throws IOException {
 
 		VariableIterator vi = nc.iterator();
@@ -188,9 +215,7 @@ public class WriteTestClass {
 			System.out.println(var.getName() + " ....");
 			var.copyout(new int[var.getRank()], var.getLengths());
 		}
-
 	}
-	
 	
 	
 	

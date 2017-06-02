@@ -87,7 +87,7 @@ public class NetCDF_write {
 					rh.setInt(origin, rhSlice[ilat][ilon]);
 				}
 			}
-
+			
 			////위와 같은 작업을 다른 방법으로 실행 indexIterator를 얻어 옴으로써 하나의 루프로 실행
 			IndexIterator rhIi = new IndexIterator(
 				new int[] {numRecs-1, 0, 0},
@@ -104,9 +104,7 @@ public class NetCDF_write {
 			
 			
 			//새로운 데이터를 multiArray를 이용하여 작성
-			double[][][] TSlice = {{ 
-				{5, 10, 15, 20}, {10, 15, 20, 25}, {15, 20, 25, 30} 
-			    }};
+			double[][][] TSlice = {{{ 5, 10, 15, 20}, {10, 15, 20, 25}, {15, 20, 25, 30}}};
 			
 			Variable temperature = nc.get("T"); // T 요소를 가져온다 
 			origin[0] = numRecs - 1;
