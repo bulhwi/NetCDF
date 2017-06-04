@@ -120,7 +120,7 @@ public class NetCDF_write {
 				       new ArrayMultiArray(T2dSlice));
 			
 			 System.out.println("write " + fileName + " successfully");
-			
+			 
 			
 			
 		} catch (IOException e) {

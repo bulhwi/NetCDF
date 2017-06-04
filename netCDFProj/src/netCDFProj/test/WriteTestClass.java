@@ -22,10 +22,11 @@ import ucar.netcdf.VariableIterator;
 /**
  * 정해진 영역의 데이터를 이용해서 대기온도 값을 조회하여 해당 데이터를 수정하는 테스트클래스
  * @author bulhwi
- *
+ * https://www.unidata.ucar.edu/software/netcdf/examples/files.html - 파일
+ *	sample file = sresa1b_ncar_ccsm3-example.nc
  */
 public class WriteTestClass {
-	static String fileName = "C:\\Users\\bulhwi\\Desktop\\sresa1b_ncar_ccsm3-example.nc";
+	static String fileName = "C:\\Users\\bul92\\Desktop\\sresa1b_ncar_ccsm3-example.nc";
 
 	public static void main(String[] args) {
 
@@ -47,7 +48,7 @@ public class WriteTestClass {
 /////
 			Variable lat = nc.get("lat");
 			Variable lon = nc.get("lon");
-			Variable time = nc.get("time");
+			Variable time = nc.get("time"); // time 값은 현재 1개
 			
 			
 			int leng = lat.getLengths()[0];
@@ -63,6 +64,7 @@ public class WriteTestClass {
 			}
 			
 			leng = lon.getLengths()[0];
+			
 			int[] arr2 = new int[5];
 			
 			arr2[0] = lonIndex;
@@ -127,7 +129,7 @@ public class WriteTestClass {
 			for(int i=0; i<data.length; i++){
 				for(int j = 0; j<data[i].length; j++){
 					for(int k= 0; k<data[i][j].length; k++){
-							data[i][j][k] = 17.2017f;
+							data[i][j][k] = 1880.20017f;
 					}
 				}
 			}
@@ -135,6 +137,9 @@ public class WriteTestClass {
 			
 			
 			Dimension timeD = nc.getDimensions().get("time");
+			
+			
+			//수정된 데이터 배열을 netCDF 파일에 해당 변수에 초기화한다.
 			int timeDex = timeD.getLength();
 			int[] writeArr = new int[3];
 			writeArr[0] = timeDex -1 ;
@@ -147,6 +152,30 @@ public class WriteTestClass {
 			}
 			
 			tas.copyin(writeArr, new ArrayMultiArray(data));
+			
+			
+			
+			///
+			System.out.println("수정 후  ");
+			searchIndex = new int[3];
+			
+			tasDex = new int[tas.getRank()];
+			tatas = new double[times.length][lats.length][lons.length];
+			for(int i=0; i<times.length; i++){
+				searchIndex[0] = times[i];
+				for(int j = 0; j < lats.length; j++){
+					searchIndex[1] = lats[j];
+					for(int k = 0; k<lons.length; k++){
+						searchIndex[2] = lons[k];
+						tatas[i][j][k] = tas.getDouble(searchIndex);
+						System.out.println(tatas[i][j][k]);
+					}
+				}
+			}
+			
+			
+			
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -173,7 +202,6 @@ public class WriteTestClass {
 		for (int i = 0; i < vars.length; i++) {
 			index[0] = i;
 			vars[i] = cdfVar.getDouble(index);
-			System.out.println(vars[i] + "lons.print");
 		}
 		WriteTestClass w = new WriteTestClass();
 		
@@ -241,6 +269,9 @@ public class WriteTestClass {
 			var.copyout(new int[var.getRank()], var.getLengths());
 		}
 	}
+	
+	
+	
 	
 	
 	
