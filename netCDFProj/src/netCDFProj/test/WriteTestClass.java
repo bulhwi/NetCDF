@@ -10,15 +10,12 @@ import ucar.netcdf.NetcdfFile;
 import ucar.netcdf.Variable;
 import ucar.netcdf.VariableIterator;
 
-/*
- * lat = 34.31877, 35.71953, 37.12029
-	lon = 125.1562, 126.5625, 127.9688, 129.375, 130.7812
-	tas(time, lat, lon)
-	
-	example file = sresa1b_ncar_ccsm3-example.nc
-	
-	*/
 /**
+ *  lat = 34.31877, 35.71953, 37.12029
+ *	lon = 125.1562, 126.5625, 127.9688, 129.375, 130.7812
+ *	tas(time, lat, lon)
+ * 
+ * 
  * 정해진 영역의 데이터를 이용해서 대기온도 값을 조회하여 해당 데이터를 수정하는 테스트클래스
  * @author bulhwi
  * 
