@@ -38,8 +38,6 @@ variables:
 data:
 }
 */
-
-
 public class NetCDF_CreatTest {
 	static String fileName = "C:\\Users\\bulhwi\\Desktop\\CreateNetCDF.nc";
 	public static void main(String[] args) {
@@ -100,9 +98,7 @@ public class NetCDF_CreatTest {
 						schema
 					);
 			
-			 /* Now get the variables and write some data into them.  We
-		       show two ways to write data, first writing one value at a
-		       time, then using a MultiArray.  */
+			
 		    int[][][] rhData = {{{ 1,  2,  3,  4}, { 5,  6,  7,  8}, { 9, 10, 11, 12}},	{{21, 22, 23, 24}, {25, 26, 27, 28}, {29, 30, 31, 32}} };
 		    Variable rh = nc.get(rhP.getName()); // or nc.get("rh")
 
@@ -122,19 +118,15 @@ public class NetCDF_CreatTest {
 			}
 		    }
 
-		    /* We could do this much more simply using an IndexIterator
-	               from the multiarray package to set the values one at a
-	               time.  Note that this approach doesn't need nested loops,
-	               just a single loop no matter what the rank of the
-	               variable. */
+		  //	indexIterator를 이용한 방법
 		    IndexIterator odom = new IndexIterator(rh.getLengths());
 		    MultiArray rhMa = new ArrayMultiArray(rhData);
 		    for ( ; odom.notDone(); odom.incr()) {
 			rh.setInt(odom.value(), rhMa.getInt(odom.value()));
 		    }
 
-		    /* Here's a MultiArray approach to set the values of T all
-	               at once. */
+		
+		    
 		    Variable T = nc.get(tP.getName()); // or nc.get("T")
 		    double[][][] TData = {
 			{{  1, 2,   3,  4}, {2,  4,  6,  8}, {  3,  6,  9,   12}},

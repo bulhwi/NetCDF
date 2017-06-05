@@ -76,10 +76,6 @@ public class NetCDFTest {
 			System.out.println(areaData[0][1]);
 			
 			
-			/*System.out.println("areaData length ==== " + areaData.length);
-			System.out.println("areaData length ==== " + areaData[0].length);
-			System.out.println("areaData length ==== " + areaData[1].length);*/
-			
 			//경도 위도의 값으로 area 데이터를 출력
 			for(int i = 0; i < areaData.length; i++){
 				areaDex[0] = i;

@@ -57,7 +57,7 @@ import ucar.netcdf.Variable;
  */
 
 public class NetCDF_write {
-	static String fileName = "C:\\Users\\bulhwi\\Desktop\\example.nc";
+	static String fileName = "C:\\Users\\bulhwi\\git\\NetCDF\\netCDFProj\\ncFile\\example.nc";
 
 	public static void main(String[] args) {
 		try {
@@ -120,8 +120,6 @@ public class NetCDF_write {
 				       new ArrayMultiArray(T2dSlice));
 			
 			 System.out.println("write " + fileName + " successfully");
-			 
-			
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

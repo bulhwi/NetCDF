@@ -80,8 +80,8 @@ public class NetCDF_create {
 		ProtoVariable tP = new ProtoVariable(
 			    "T",
 			    double.class,
-			    new Dimension[] {timeD, latD, lonD}, // shape (anonymous array)
-			    new Attribute[] {	// attributes (anonymous array)
+			    new Dimension[] {timeD, latD, lonD}, 
+			    new Attribute[] {	
 				new Attribute("long_name", "surface temperature"),
 				new Attribute("units", "degC"),
 				}
@@ -95,18 +95,17 @@ public class NetCDF_create {
 		ProtoVariable timeP = new ProtoVariable(timeD.getName(), float.class, timeD);
 		timeP.putAttribute(new Attribute("units", "hours"));
 
-		/* Create an Attribute to use as a global attribute */
+		
 		Attribute titleA = new Attribute("title", "Example Data");
 
-		/* Create the Schema for the desired netCDF file.   */
+		
 		Schema schema = new Schema(
 		    new ProtoVariable[] {rhP, tP, latP, lonP, timeP},
 		    new Attribute[] {titleA}
 		    );
 
-		/* Here's another way to create the same schema,
-	           incrementally. */
-		Schema schema1 = new Schema(); // an empty schema
+		
+		Schema schema1 = new Schema(); 
 		schema1.put(rhP);
 		schema1.put(tP);
 		schema1.put(latP);
@@ -118,7 +117,7 @@ public class NetCDF_create {
 		    if (args.length > 0)
 			fileName = args[0];
 		    
-		    /* Use the Schema to construct a new netCDF file */
+		   
 		    NetcdfFile nc = new NetcdfFile(fileName,
 						   true, // clobber an existing file
 						   true, // prefill variable values

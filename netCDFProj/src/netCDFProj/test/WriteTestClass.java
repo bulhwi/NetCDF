@@ -10,7 +10,6 @@ import ucar.netcdf.NetcdfFile;
 import ucar.netcdf.Variable;
 import ucar.netcdf.VariableIterator;
 
-
 /*
  * lat = 34.31877, 35.71953, 37.12029
 	lon = 125.1562, 126.5625, 127.9688, 129.375, 130.7812
@@ -22,11 +21,16 @@ import ucar.netcdf.VariableIterator;
 /**
  * 정해진 영역의 데이터를 이용해서 대기온도 값을 조회하여 해당 데이터를 수정하는 테스트클래스
  * @author bulhwi
- * https://www.unidata.ucar.edu/software/netcdf/examples/files.html - 파일
- *	sample file = sresa1b_ncar_ccsm3-example.nc
+ * 
+ * 		https://www.unidata.ucar.edu/software/netcdf/java/examples/ -- 소스
+ * 		https://www.unidata.ucar.edu/software/netcdf/examples/files.html - 파일
+ * 		https://www.unidata.ucar.edu/downloads/netcdf/netcdf-java-4/index.jsp --jar
+ * 
+ *		sample file = sresa1b_ncar_ccsm3-example.nc
+ *
  */
 public class WriteTestClass {
-	static String fileName = "C:\\Users\\bul92\\Desktop\\sresa1b_ncar_ccsm3-example.nc";
+	static String fileName = "C:\\Users\\bulhwi\\git\\NetCDF\\netCDFProj\\ncFile\\sresa1b_ncar_ccsm3-example.nc";
 
 	public static void main(String[] args) {
 
@@ -129,7 +133,7 @@ public class WriteTestClass {
 			for(int i=0; i<data.length; i++){
 				for(int j = 0; j<data[i].length; j++){
 					for(int k= 0; k<data[i][j].length; k++){
-							data[i][j][k] = 1880.20017f;
+							data[i][j][k] = 210.20017f;
 					}
 				}
 			}
@@ -153,8 +157,6 @@ public class WriteTestClass {
 			
 			tas.copyin(writeArr, new ArrayMultiArray(data));
 			
-			
-			
 			///
 			System.out.println("수정 후  ");
 			searchIndex = new int[3];
@@ -172,9 +174,6 @@ public class WriteTestClass {
 					}
 				}
 			}
-			
-			
-			
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
