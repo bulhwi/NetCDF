@@ -17,18 +17,13 @@ import ucar.netcdf.Variable;
 public class TestClass {
 
 	public static void main(String[] args) {
-		String fileName = "C:\\Users\\bul92\\Desktop\\wrfout_d04_2016-05-23_15_00_00";
+		String fileName = "C:\\Users\\bulhwi\\Desktop\\fnl_2016_CFK_wrfout_d04\\wrfout_d04_2016-05-23_15_00_00";
 		double[] latList = {37.40238952636719, 37.402366638183594, 37.40234375, 37.402320861816406, 37.40229034423828};
 		double[] lonList = {127.90786743164062,	127.91726684570312,	127.92666625976562, 127.93609619140625,	127.94549560546875};
 		Netcdf nc = null;
 		int[] jValue = new int[latList.length];
 		int[] kValue = new int[latList.length];
-	/*	System.out.println("latList print");
-		for(int i =0; i< latList.length; i++){
-			System.out.println(latList[i]);
-		}
-		System.out.println("////////////////");*/
-		
+	
 		try {
 			nc = new NetcdfFile(fileName, true);
 			System.out.println(nc);
@@ -61,14 +56,14 @@ public class TestClass {
 			double[][][] psfcData = new double[psfcIndex[0]][psfcIndex[1]][psfcIndex[2]];
 			
 			MultiArray psfcMa = psfc.copyout(test, psfcIndex);
-			/*System.out.println("psfcMa test value ===== " + psfcMa.getFloat(new int[]{0,jValue[0],kValue[0]}));*/
-			/*for(int i =0; i< jValue.length; i++){
+			System.out.println("psfcMa test value ===== " + psfcMa.getFloat(new int[]{0,jValue[0],kValue[0]}));
+			for(int i =0; i< jValue.length; i++){
 				for(int j =0; j< kValue.length; j++){
 					System.out.println("<"+0+", "+i+", "+ j + ">" + psfcMa.getFloat(new int[]{0,jValue[i],kValue[j]}));
 				}
-			}*/
+			}
 			
-			//일단은 다섯개 값만 출력 
+		/*	//일단은 다섯개 값만 출력 
 			for(int i = 0; i< psfcData.length; i++){
 				for(int j = 0; j < 1; j++){
 					for(int k = 0; k< kValue.length; k++){
@@ -76,7 +71,7 @@ public class TestClass {
 					}
 				}
 			}
-			
+			*/
 			
 			
 			

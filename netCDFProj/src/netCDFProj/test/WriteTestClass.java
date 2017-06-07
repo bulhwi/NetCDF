@@ -130,7 +130,7 @@ public class WriteTestClass {
 			for(int i=0; i<data.length; i++){
 				for(int j = 0; j<data[i].length; j++){
 					for(int k= 0; k<data[i][j].length; k++){
-							data[i][j][k] = 210.20017f;
+							data[i][j][k] = 101.20017f;
 					}
 				}
 			}
