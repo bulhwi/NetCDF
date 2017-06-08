@@ -143,7 +143,7 @@ public class TestClass {
          for(int i=0; i<updateData.length; i++){
             for(int j=0; j<updateData[i].length; j++){
                for(int k = 0; k<updateData[i][j].length; k++){
-                  updateData[i][j][k] = 200.12345F;
+                  updateData[i][j][k] = 300.12345F; 
                }
             }
          }
@@ -161,7 +161,6 @@ public class TestClass {
          }
          // 세팅된 데이터값을 넣는다 .
          psfc.copyin(updateIndex, new ArrayMultiArray(updateData));
-         
          System.out.println("수정 후 ");
          
          
