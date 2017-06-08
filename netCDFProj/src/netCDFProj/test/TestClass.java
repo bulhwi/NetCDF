@@ -24,9 +24,9 @@ public class TestClass {
         String fileName = "C:\\Users\\bulhwi\\Desktop\\fnl_2016_CFK_wrfout_d04\\wrfout_d04_2016-05-23_15_00_00";
         
         try {
-         Netcdf nc = new NetcdfFile(fileName, false);
-         /*System.out.println(nc);*/
-         Variable xLat = nc.get("XLAT");
+         Netcdf nc = new NetcdfFile(fileName, false); //nc파일객체를 가져온다. false - 쓰기전용으로 ... true - 읽기전용으로...
+         System.out.println(nc); // 파일의 구조를 출력 
+         Variable xLat = nc.get("XLAT");  //XLAT 객체를 얻어온다.
          float[][][] xLats = new float[xLat.getLengths()[0]][xLat.getLengths()[1]][xLat.getLengths()[2]];
          int[] latIndex = new int[xLat.getRank()];
          
@@ -37,7 +37,7 @@ public class TestClass {
                latIndex[1] = j;
                for(int k = 0; k<xLats[i][j].length; k++){
                   latIndex[2] = k;
-                  xLats[i][j][k] = xLat.getFloat(latIndex);
+                  xLats[i][j][k] = xLat.getFloat(latIndex); // 인덱스에 해당되는 데이터를 가져온다.
                   /*System.out.println("<" + i+ ", "+ j + ", " + k +">" + xLats[i][j][k]);*/
                }
             }
@@ -79,13 +79,11 @@ public class TestClass {
          }
       
          
-         /////////////
-          /*float[] latList = {37.40239f, 37.402367f, 37.402344f, 37.40232f, 37.40229f};
-           float[] lonList = {127.90787f, 127.91727f, 127.92667f, 127.9361f, 127.945496f};*/
+     /////
          
-         List<Integer> xList = new ArrayList<Integer>();
-         List<Integer> yList = new ArrayList<Integer>();
-         
+         List<Integer> xList = new ArrayList<Integer>(); //x축 인덱스
+         List<Integer> yList = new ArrayList<Integer>(); //y축 인덱스
+
          for(int i = 0; i<xLats.length; i++){
             latIndex[0] = i;
             for(int j = 0; j<xLats[i].length; j++){
@@ -105,6 +103,8 @@ public class TestClass {
                }
             }
          }
+         
+         //위도의 인덱스를 이용하여 검색하고자 하는 데이터의 경도데이터를 추출한다. 해당 경도값이 같으면 yIndex에 경도의 인덱스값을 추가한다
          List<Integer> yIndex = new ArrayList<Integer>();
          for(int i = 0; i<xLongs.length; i++){
             lonIndex[0] = i;
@@ -123,7 +123,7 @@ public class TestClass {
          }
          
          ////////////////
-         
+         //수정전 데이터
          for(int i = 0; i<psfcArr.length; i++){
             lonIndex[0] = i;
             for(int j = 0; j<xList.size(); j++){
@@ -138,15 +138,17 @@ public class TestClass {
             }
          }
          
+         //수정하려는 값을 배열로 
          float[][][] updateData = new float[1][xList.size()][yIndex.size()];
          for(int i=0; i<updateData.length; i++){
             for(int j=0; j<updateData[i].length; j++){
                for(int k = 0; k<updateData[i][j].length; k++){
-                  updateData[i][j][k] = 300.12345F;
+                  updateData[i][j][k] = 200.12345F;
                }
             }
          }
          int[] updateIndex = new int[psfc.getRank()];
+         //수정하려는값 세팅
          for(int i =0; i<psfcArr.length; i++){
             updateIndex[0] = i;
             for(int j = 0; j<xList.size(); j++){
@@ -157,11 +159,13 @@ public class TestClass {
                }
             }
          }
-         
+         // 세팅된 데이터값을 넣는다 .
          psfc.copyin(updateIndex, new ArrayMultiArray(updateData));
          
          System.out.println("수정 후 ");
          
+         
+         //확인
          int[] index = new int[3];
          for(int i = 0; i< psfcArr.length; i++){
             index[0] = i;
@@ -170,6 +174,7 @@ public class TestClass {
                for(int k =0; k<psfcArr[i][j].length; k++){
                   index[2] = k;
                   psfcArr[i][j][k] = psfc.getFloat(index);
+                  
                   System.out.println("<" + i+ ", "+ j + ", " + k +">" + psfcArr[i][j][k]);
                }
             }

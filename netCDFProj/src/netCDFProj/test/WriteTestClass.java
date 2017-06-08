@@ -24,7 +24,8 @@ import ucar.netcdf.VariableIterator;
  *
  */
 public class WriteTestClass {
-	static String fileName = "C:\\Users\\bulhwi\\git\\NetCDF\\netCDFProj\\ncFile\\sresa1b_ncar_ccsm3-example.nc";
+	/*static String fileName = "C:\\Users\\bulhwi\\git\\NetCDF\\netCDFProj\\ncFile\\sresa1b_ncar_ccsm3-example.nc";*/
+	static String fileName = "C:\\Users\\bulhwi\\Desktop\\fnl_2016_CFK_wrfout_d04\\wrfout_d04_2016-05-23_15_00_00";
 
 	public static void main(String[] args) {
 
@@ -33,6 +34,7 @@ public class WriteTestClass {
 		
 		try {
 /////		
+			System.out.println(nc);
 			t.printNetCDFData(nc);
 			int latIndex = t.getIndex(nc, "lat", 34.31877136230469);
 			int latIndex2 = t.getIndex(nc, "lat", 35.71953201293945 );
@@ -258,7 +260,7 @@ public class WriteTestClass {
 
 		while (vi.hasNext()) {
 			Variable var = vi.next();
-			System.out.println(var.getName() + " ....");
+			/*System.out.println(var.getName() + " ....");*/
 			var.copyout(new int[var.getRank()], var.getLengths());
 		}
 	}

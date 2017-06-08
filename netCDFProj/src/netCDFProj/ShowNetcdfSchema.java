@@ -12,10 +12,10 @@ import ucar.netcdf.NetcdfFile;
  *
  */
 public class ShowNetcdfSchema {
-	static String fileName = "C:\\Users\\bulhwi\\Desktop\\sresa1b_ncar_ccsm3-example.nc";
-	/*static String fileName = "C:\\Users\\bulhwi\\Desktop\\CreateNetCDf.nc"; */
-	/*static String fileName = "C:\\Users\\bulhwi\\Desktop\\ncdf_sample\\data\\tvd.nc";*/
+
+
 	public static void main(String[] args){
+		String fileName = "C:\\Users\\bulhwi\\Desktop\\fnl_2016_CFK_wrfout_d04\\wrfout_d04_2016-05-23_15_00_00";
 		try {
 			Netcdf nc = new NetcdfFile(fileName, true);
 			System.out.println(nc);
