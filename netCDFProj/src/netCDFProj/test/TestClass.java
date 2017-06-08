@@ -9,6 +9,13 @@ import ucar.netcdf.Netcdf;
 import ucar.netcdf.NetcdfFile;
 import ucar.netcdf.Variable;
 
+
+/*
+https://www.unidata.ucar.edu/software/netcdf/java/examples/ -- 소스
+https://www.unidata.ucar.edu/software/netcdf/examples/files.html - 파일
+https://www.unidata.ucar.edu/downloads/netcdf/netcdf-java-4/index.jsp --jar
+*/
+
 public class TestClass {
    public static void main(String[] args) {
        float[] latList = {37.40239f, 37.402367f, 37.402344f, 37.40232f, 37.40229f};
@@ -108,7 +115,7 @@ public class TestClass {
                   for(int q = 0; q<lonList.length; q++){
                      if(xLongs[lonIndex[0]][lonIndex[1]][lonIndex[2]] == lonList[q]){
                         yIndex.add(lonIndex[2]);
-                        System.out.println(xLongs[lonIndex[0]][lonIndex[1]][lonIndex[2]] + "***");
+                        /*System.out.println(xLongs[lonIndex[0]][lonIndex[1]][lonIndex[2]] + "***");*/
                      }
                   }
                }
@@ -125,7 +132,7 @@ public class TestClass {
                   lonIndex[2] = yIndex.get(k);
                   System.out.print(lonIndex[0] + ", ");
                   System.out.print(lonIndex[1] + ", ");
-                  System.out.print(lonIndex[2] + ", ");
+                  System.out.print(lonIndex[2] + " _ ");
                   System.out.println(psfcArr[lonIndex[0]][lonIndex[1]][lonIndex[2]]);
                }
             }
@@ -135,7 +142,7 @@ public class TestClass {
          for(int i=0; i<updateData.length; i++){
             for(int j=0; j<updateData[i].length; j++){
                for(int k = 0; k<updateData[i][j].length; k++){
-                  updateData[i][j][k] = 200.12345F;
+                  updateData[i][j][k] = 300.12345F;
                }
             }
          }
@@ -163,16 +170,10 @@ public class TestClass {
                for(int k =0; k<psfcArr[i][j].length; k++){
                   index[2] = k;
                   psfcArr[i][j][k] = psfc.getFloat(index);
-                  
+                  System.out.println("<" + i+ ", "+ j + ", " + k +">" + psfcArr[i][j][k]);
                }
             }
          }
-         
-         System.out.println(psfcArr[0][65][58]);
-         System.out.println(psfcArr[0][65][59]);
-         System.out.println(psfcArr[0][65][60]);
-         System.out.println(psfcArr[0][65][61]);
-         System.out.println(psfcArr[0][65][62]);
          
          
       } catch (IOException e) {
