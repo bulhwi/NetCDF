@@ -174,7 +174,7 @@ public class TestClass {
                   index[2] = k;
                   psfcArr[i][j][k] = psfc.getFloat(index);
                   
-                  System.out.println("<" + i+ ", "+ j + ", " + k +">" + psfcArr[i][j][k]);
+                /*  System.out.println("<" + i+ ", "+ j + ", " + k +">" + psfcArr[i][j][k]);*/
                }
             }
          }
