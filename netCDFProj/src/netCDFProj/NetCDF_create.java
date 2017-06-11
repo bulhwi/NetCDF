@@ -119,7 +119,7 @@ public class NetCDF_create {
 		    
 		   
 		    NetcdfFile nc = new NetcdfFile(fileName,
-						   true, // clobber an existing file
+						   false, // clobber an existing file
 						   true, // prefill variable values
 						   schema // metadata template
 			                          );

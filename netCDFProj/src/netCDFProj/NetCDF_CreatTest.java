@@ -7,6 +7,7 @@ import ucar.multiarray.IndexIterator;
 import ucar.multiarray.MultiArray;
 import ucar.netcdf.Attribute;
 import ucar.netcdf.Dimension;
+import ucar.netcdf.Netcdf;
 import ucar.netcdf.NetcdfFile;
 import ucar.netcdf.ProtoVariable;
 import ucar.netcdf.Schema;
@@ -39,19 +40,22 @@ data:
 }
 */
 public class NetCDF_CreatTest {
-	static String fileName = "C:\\Users\\bulhwi\\Desktop\\CreateNetCDF.nc";
 	public static void main(String[] args) {
+		
+		
+		/*String fileName = "생성될 파일의 저장 경로";*/
+		String fileName = "C:\\Users\\bul92\\Desktop\\test_NetCDF.nc";
 		Dimension timeD = new UnlimitedDimension("time");
 		Dimension latD = new Dimension("lat", 3);
-		Dimension lonD = new Dimension("lon", 3);
+		Dimension lonD = new Dimension("lon", 4);
 		
 		
 		//변수 생성1
 		String rhPName = "rh";
 		Class rhPType = int.class;
 		Dimension[] rhPDims = {timeD, latD, lonD}; 
-		Attribute rhPLongName = new Attribute("long_name", "relative humidity");
-		Attribute rhPUnits = new Attribute("units","percent");
+		Attribute rhPLongName = new Attribute("long_name", "test_relative humidity");
+		Attribute rhPUnits = new Attribute("units","테스트_단위");
 		Attribute[] rhPAtts = {rhPLongName, rhPUnits};
 		ProtoVariable rhP = new ProtoVariable(
 					rhPName, 
@@ -67,45 +71,49 @@ public class NetCDF_CreatTest {
 					double.class,
 					new Dimension[]{timeD, latD, lonD},
 					new Attribute[]{
-						new Attribute("long_name", "surface temperature"),
-						new Attribute("units", "degC"),
+						new Attribute("long_name", "test_surface temperature"),
+						new Attribute("units", "테스트_단위"),
 					}
-				
 				);
+		
+		
 		
 		//변수생성 방법3 - 보통 1차원배열로 구성된 경도,위도에 대한 변수를 생성할때 사용한다.
 		ProtoVariable latP = new ProtoVariable(latD.getName(), float.class, latD );
-		latP.putAttribute(new Attribute("units", "degrees_north"));
+		latP.putAttribute(new Attribute("units", "test_degrees_north"));
 		ProtoVariable lonP = new ProtoVariable(lonD.getName(), float.class, lonD);
-		lonP.putAttribute(new Attribute("units", "degrees_east"));
+		lonP.putAttribute(new Attribute("units", "test_degrees_east"));
 		ProtoVariable timeP = new ProtoVariable(timeD.getName(), float.class, timeD);
-		timeP.putAttribute(new Attribute("units", "hours"));
+		timeP.putAttribute(new Attribute("units", "test_hours"));
 		
 		
 		//전역속성
 		Attribute titleA = new Attribute("title", "Example Data");
+		Attribute titleB = new Attribute("TEST", "테스트 파일입니다. ");
+		
 
 		Schema schema = new Schema(
 			    new ProtoVariable[] {rhP, tP, latP, lonP, timeP},
-			    new Attribute[] {titleA}
+			    new Attribute[] {titleA, titleB}
 			    );
 		
 		try {
 			NetcdfFile nc = new NetcdfFile(
 						fileName, //파일 이름
 						true, // 
-						true,
+						false,
 						schema
 					);
 			
 			
-		    int[][][] rhData = {{{ 1,  2,  3,  4}, { 5,  6,  7,  8}, { 9, 10, 11, 12}},	{{21, 22, 23, 24}, {25, 26, 27, 28}, {29, 30, 31, 32}} };
+		    int[][][] rhData = { 
+		    					{{ 1,  2,  3,  4}, { 5,  6,  7,  8}, { 9, 10, 11, 12}},	
+		    					{{21, 22, 23, 24}, {25, 26, 27, 28}, {29, 30, 31, 32}} 
+		    					};
 		    Variable rh = nc.get(rhP.getName()); // or nc.get("rh")
 
-		    /* writing a single value is simple */
 		    rh.setInt(new int[] {1,0,2}, rhData[1][0][2]);
 
-		    /* writing all the values, one at a time, is similar */
 		    int[] ix = new int[3];
 		    for (int time = 0; time < rhData.length; time++) { 
 			ix[0] = time;
@@ -146,7 +154,26 @@ public class NetCDF_CreatTest {
 							   {-109, -107, -105, -103}));
 		    time.copyin(origin, new ArrayMultiArray(new float[] 
 							    {6, 18}));
-
+		    
+		    
+		    
+		    Variable testRh = nc.get("rh");
+		    int[] index = new int[testRh.getRank()];
+		    int[][][] testData = new int[testRh.getLengths()[0]][testRh.getLengths()[1]][testRh.getLengths()[2]];
+		    
+		    for(int i = 0; i< testData.length; i++){
+		    	index[0] = i;
+		    	for(int j = 0; j<testData[i].length; j++){
+		    		index[1] = j;
+		    		for(int k = 0; k<testData[i][j].length; k++){
+		    			index[2] = k;
+		    			testData[i][j][k] = testRh.getInt(index);
+		    			System.out.print("<"+i+", "+j + ", " +k+">" + testData[i][j][k] + ",  ");
+		    		}
+		    		System.out.println();
+		    	}
+		    }
+		    System.out.println(nc); // 파일의 데이터 구조 출력
 		    nc.close();
 		    System.out.println("created " + fileName + " successfully");
 			

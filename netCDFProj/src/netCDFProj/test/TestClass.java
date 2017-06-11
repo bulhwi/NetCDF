@@ -18,14 +18,15 @@ https://www.unidata.ucar.edu/downloads/netcdf/netcdf-java-4/index.jsp --jar
 
 public class TestClass {
    public static void main(String[] args) {
-       float[] latList = {37.40239f, 37.402367f, 37.402344f, 37.40232f, 37.40229f};
+	   String fileName = "C:\\Users\\bul92\\Desktop\\NetCDF (2)\\wrfout_d04_2016-05-24_05_00_00";
+
+	   
+	   float[] latList = {37.40239f, 37.402367f, 37.402344f, 37.40232f, 37.40229f};
         float[] lonList = {127.90787f, 127.91727f, 127.92667f, 127.9361f, 127.945496f};
-        
-        String fileName = "C:\\Users\\bulhwi\\Desktop\\fnl_2016_CFK_wrfout_d04\\wrfout_d04_2016-05-23_15_00_00";
-        
+        /*String fileName = "파일 경로\\wrfout_d04_2016-05-23_15_00_00";*/
         try {
          Netcdf nc = new NetcdfFile(fileName, false); //nc파일객체를 가져온다. false - 쓰기전용으로 ... true - 읽기전용으로...
-         System.out.println(nc); // 파일의 구조를 출력 
+         /*System.out.println(nc);*/ // 파일의 구조를 출력 
          Variable xLat = nc.get("XLAT");  //XLAT 객체를 얻어온다.
          float[][][] xLats = new float[xLat.getLengths()[0]][xLat.getLengths()[1]][xLat.getLengths()[2]];
          int[] latIndex = new int[xLat.getRank()];
@@ -60,7 +61,6 @@ public class TestClass {
                }
             }
          }
-         
          //test PSFC data load
          Variable psfc = nc.get("PSFC");
          float[][][] psfcArr = new float[psfc.getLengths()[0]][psfc.getLengths()[1]][psfc.getLengths()[2]];
@@ -143,7 +143,7 @@ public class TestClass {
          for(int i=0; i<updateData.length; i++){
             for(int j=0; j<updateData[i].length; j++){
                for(int k = 0; k<updateData[i][j].length; k++){
-                  updateData[i][j][k] = 300.12345F; 
+                  updateData[i][j][k] = 123.12345F; 
                }
             }
          }
@@ -161,9 +161,9 @@ public class TestClass {
          }
          // 세팅된 데이터값을 넣는다 .
          psfc.copyin(updateIndex, new ArrayMultiArray(updateData));
+
+         
          System.out.println("수정 후 ");
-         
-         
          //확인
          int[] index = new int[3];
          for(int i = 0; i< psfcArr.length; i++){
@@ -173,12 +173,15 @@ public class TestClass {
                for(int k =0; k<psfcArr[i][j].length; k++){
                   index[2] = k;
                   psfcArr[i][j][k] = psfc.getFloat(index);
-                  
                 /*  System.out.println("<" + i+ ", "+ j + ", " + k +">" + psfcArr[i][j][k]);*/
                }
             }
          }
-         
+         System.out.println("<" + 0+ ", "+ 65 + ", " + 58 +">" + psfcArr[0][65][58]);
+         System.out.println("<" + 0+ ", "+ 65 + ", " + 59 +">" + psfcArr[0][65][59]);
+         System.out.println("<" + 0+ ", "+ 65 + ", " + 60 +">" + psfcArr[0][65][60]);
+         System.out.println("<" + 0+ ", "+ 65 + ", " + 61 +">" + psfcArr[0][65][61]);
+         System.out.println("<" + 0+ ", "+ 65 + ", " + 62 +">" + psfcArr[0][65][62]);
          
       } catch (IOException e) {
          // TODO Auto-generated catch block
