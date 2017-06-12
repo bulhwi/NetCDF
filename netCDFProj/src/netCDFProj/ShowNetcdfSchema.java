@@ -15,7 +15,7 @@ public class ShowNetcdfSchema {
 
 
 	public static void main(String[] args){
-		String fileName = "C:\\Users\\bul92\\Desktop\\NetCDF (2)\\wrfout_d04_2016-05-24_04_00_00";
+		String fileName = "C:\\Users\\bulhwi\\Desktop\\fnl_2016_CFK_wrfout_d04\\wrfout_d04_2016-08-29_10_00_00";
 		try {
 			Netcdf nc = new NetcdfFile(fileName, true);
 			System.out.println(nc);
