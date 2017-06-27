@@ -10,9 +10,6 @@ import ucar.netcdf.NetcdfFile;
 import ucar.netcdf.Variable;
 import ucar.netcdf.VariableIterator;
 
- /* test git  */
-
-
 /**
  * 
  * 
@@ -136,7 +133,6 @@ public class WriteTestClass {
 					}
 				}
 			}
-
 			
 			
 			Dimension timeD = nc.getDimensions().get("time");
